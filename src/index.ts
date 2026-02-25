@@ -42,13 +42,19 @@ export {
 
 export type { ErrorCode, ErrorDetail } from './types/errors';
 
-export { createLogger, noopLogger } from './utils/logger';
-export type { Logger as LoggerType } from './utils/logger';
-
-export { createCache, getCache, clearGlobalCache, generateCacheKey } from './utils/cache';
-export type { CacheStore } from './utils/cache';
-
-export { withRetry, sleep, calculateDelay, createRetryConfig, DEFAULT_RETRY_CONFIG } from './utils/retry';
+export { 
+  createLogger, 
+  noopLogger, 
+  createCacheStore, 
+  generateCacheKey,
+  withRetry, 
+  sleep, 
+  calculateDelay, 
+  createRetryConfig, 
+  DEFAULT_RETRY_CONFIG,
+  type Logger,
+  type CacheStore,
+} from '@sdkwork/sdk-common';
 
 export { BaseApi, createApiConfig } from './api/base';
 export type { BaseApiConfig } from './api/base';
