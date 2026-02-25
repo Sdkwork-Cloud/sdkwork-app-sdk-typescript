@@ -20,7 +20,6 @@ export type {
   RetryConfig,
   CacheConfig,
   LoggerConfig,
-  Logger,
   Interceptors,
   DeepPartial,
   PickByType,

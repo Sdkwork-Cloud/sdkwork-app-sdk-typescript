@@ -14,6 +14,7 @@ export default defineConfig({
     sourcemap: true,
     minify: 'esbuild',
     rollupOptions: {
+      external: ['@sdkwork/sdk-common', /^@sdkwork\/sdk-common\/.*/],
       output: {
         exports: 'named',
       },
@@ -24,7 +25,7 @@ export default defineConfig({
     dts({
       include: ['src/**/*'],
       outDir: 'dist',
-      rollupTypes: true,
+      rollupTypes: false,
     }),
   ],
   resolve: {

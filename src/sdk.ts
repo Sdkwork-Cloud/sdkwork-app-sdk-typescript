@@ -1,5 +1,6 @@
 import type { SdkworkConfig, RequestInterceptor, ResponseInterceptor, ErrorInterceptor } from './types/core';
 import { HttpClient, createHttpClient } from './http/client';
+import type { AuthTokenManager, AuthMode, AuthTokens } from './auth';
 import type { AuthModule } from './types/auth';
 import type { UserModule } from './types/user';
 import type { ChatModule } from './types/chat';
@@ -220,6 +221,15 @@ export class SdkworkClient {
     return this.modules.social;
   }
 
+  getAuthMode(): AuthMode {
+    return this.httpClient.getAuthMode();
+  }
+
+  setAuthMode(mode: AuthMode): this {
+    this.httpClient.setAuthMode(mode);
+    return this;
+  }
+
   setApiKey(apiKey: string): this {
     this.httpClient.setApiKey(apiKey);
     return this;
@@ -232,6 +242,28 @@ export class SdkworkClient {
 
   setAccessToken(token: string): this {
     this.httpClient.setAccessToken(token);
+    return this;
+  }
+
+  setTokens(tokens: AuthTokens): this {
+    const tokenManager = this.httpClient.getTokenManager();
+    if (tokenManager) {
+      tokenManager.setTokens(tokens);
+    }
+    return this;
+  }
+
+  getTokens(): AuthTokens {
+    const tokenManager = this.httpClient.getTokenManager();
+    return tokenManager?.getTokens() ?? {};
+  }
+
+  getTokenManager(): AuthTokenManager | undefined {
+    return this.httpClient.getTokenManager();
+  }
+
+  setTokenManager(manager: AuthTokenManager): this {
+    this.httpClient.setTokenManager(manager);
     return this;
   }
 
@@ -284,6 +316,30 @@ export class SdkworkClient {
 
   getConfig() {
     return this.httpClient.getConfig();
+  }
+
+  isAuthenticated(): boolean {
+    const tokenManager = this.httpClient.getTokenManager();
+    if (!tokenManager) {
+      return false;
+    }
+    return tokenManager.isValid();
+  }
+
+  hasAuthToken(): boolean {
+    const tokenManager = this.httpClient.getTokenManager();
+    if (!tokenManager) {
+      return false;
+    }
+    return !!tokenManager.getAuthToken();
+  }
+
+  hasAccessToken(): boolean {
+    const tokenManager = this.httpClient.getTokenManager();
+    if (!tokenManager) {
+      return false;
+    }
+    return !!tokenManager.getAccessToken();
   }
 }
 

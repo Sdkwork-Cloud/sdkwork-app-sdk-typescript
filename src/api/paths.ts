@@ -18,3 +18,26 @@ export function coreApiPath(path: string): string {
 export function appApiPath(path: string): string {
   return `${APP_API_PREFIX}${normalizePath(path)}`;
 }
+
+export const API_PATHS = {
+  auth: {
+    base: appApiPath('/auth'),
+    login: appApiPath('/auth/login'),
+    register: appApiPath('/auth/register'),
+    logout: appApiPath('/auth/logout'),
+    refresh: appApiPath('/auth/refresh'),
+    smsSend: appApiPath('/auth/sms/send'),
+    smsVerify: appApiPath('/auth/sms/verify'),
+    passwordReset: appApiPath('/auth/password/reset'),
+    qrGenerate: appApiPath('/auth/qr/generate'),
+    qrStatus: (qrKey: string) => appApiPath(`/auth/qr/status/${qrKey}`),
+    qrConfirm: appApiPath('/auth/qr/confirm'),
+    phoneLogin: appApiPath('/auth/phone/login'),
+    oauthUrl: appApiPath('/auth/oauth/url'),
+    oauthLogin: appApiPath('/auth/oauth/login'),
+  },
+  user: {
+    base: appApiPath('/user'),
+    profile: appApiPath('/user/profile'),
+  },
+} as const;
